@@ -149,7 +149,7 @@ namespace hgcrawler.services
                 return false;
             }
 
-            //滚动套翻页元素
+            //滚动到翻页元素
             var nextPageScrollFlag= webdriverAction.ScrollToElement(nextPageEle, webDriver);
             if (!nextPageScrollFlag)
             {

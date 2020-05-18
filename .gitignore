@@ -1,0 +1,13 @@
+﻿################################################################################
+# 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
+################################################################################
+
+/src/hgcrawler/.vs/hgcrawler/v16
+/src/hgcrawler/hgcrawler/bin/Debug/netcoreapp3.1
+/src/hgcrawler/hgcrawler/obj
+/src/hgcrawler/hgcrawler.rules/bin/Debug/netstandard2.0
+/src/hgcrawler/hgcrawler.rules/obj
+/src/hgcrawler/hgcrawler.services/bin/Debug/netstandard2.0
+/src/hgcrawler/hgcrawler.services/obj
+/src/hgcrawler/hgcrawler.util/bin/Debug/netstandard2.0
+/src/hgcrawler/hgcrawler.util/obj
