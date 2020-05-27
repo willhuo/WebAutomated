@@ -12,3 +12,6 @@
 /src/hgcrawler/hgcrawler.util/bin/Debug/netstandard2.0
 /src/hgcrawler/hgcrawler.util/obj
 /.vs
+/src/hgcrawler/.vs/hgcrawler/DesignTimeBuild
+/src/hgcrawler/hgcrawlerform/bin/Debug
+/src/hgcrawler/hgcrawlerform/obj/Debug
