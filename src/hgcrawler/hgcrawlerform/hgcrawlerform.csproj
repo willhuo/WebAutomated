@@ -81,6 +81,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\hgcrawler.services\hgcrawler.services.csproj">
+      <Project>{d85ed58e-8820-4724-a1f1-08fbe62b06f4}</Project>
+      <Name>hgcrawler.services</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
