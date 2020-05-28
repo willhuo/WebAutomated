@@ -15,3 +15,6 @@
 /src/hgcrawler/.vs/hgcrawler/DesignTimeBuild
 /src/hgcrawler/hgcrawlerform/bin/Debug
 /src/hgcrawler/hgcrawlerform/obj/Debug
+/src/hgcrawler/hgcrawler.common/obj
+/src/hgcrawler/hgcrawler.common/bin/Debug/netstandard2.0
+/src/hgcrawler/packages

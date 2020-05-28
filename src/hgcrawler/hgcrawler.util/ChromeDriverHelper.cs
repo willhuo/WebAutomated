@@ -13,7 +13,10 @@ namespace hgcrawler.util
         {
         }
 
-
+        /// <summary>
+        /// 启动chromedriver驱动
+        /// </summary>
+        /// <returns></returns>
         public IWebDriver StartDriver()
         {
             try
@@ -55,6 +58,10 @@ namespace hgcrawler.util
             }
         }
 
+        /// <summary>
+        /// 关闭chromedriver
+        /// </summary>
+        /// <param name="webDriver"></param>
         public void CloseWedriver(IWebDriver webDriver)
         {
             if (webDriver != null)

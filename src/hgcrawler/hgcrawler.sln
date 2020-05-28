@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "hgcrawler.rules", "hgcrawle
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hgcrawlerform", "hgcrawlerform\hgcrawlerform.csproj", "{3CDE1088-C259-479A-B433-398D30A7DE86}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hgcrawler.common", "hgcrawler.common\hgcrawler.common.csproj", "{C67F55FA-104F-433A-8E5D-02B79B98F5B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,14 @@ Global
 		{3CDE1088-C259-479A-B433-398D30A7DE86}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3CDE1088-C259-479A-B433-398D30A7DE86}.Release|x86.ActiveCfg = Release|Any CPU
 		{3CDE1088-C259-479A-B433-398D30A7DE86}.Release|x86.Build.0 = Release|Any CPU
+		{C67F55FA-104F-433A-8E5D-02B79B98F5B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C67F55FA-104F-433A-8E5D-02B79B98F5B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C67F55FA-104F-433A-8E5D-02B79B98F5B3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C67F55FA-104F-433A-8E5D-02B79B98F5B3}.Debug|x86.Build.0 = Debug|Any CPU
+		{C67F55FA-104F-433A-8E5D-02B79B98F5B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C67F55FA-104F-433A-8E5D-02B79B98F5B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C67F55FA-104F-433A-8E5D-02B79B98F5B3}.Release|x86.ActiveCfg = Release|Any CPU
+		{C67F55FA-104F-433A-8E5D-02B79B98F5B3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
