@@ -19,7 +19,7 @@ namespace hgcrawler.util
             try
             {
                 webDriver.Navigate().GoToUrl(url);
-                Log.Information("URL：{0}访问完成",url);
+                Log.Information("URL：{0} visit finish",url);
                 Thread.Sleep(2000);
                 return true;
             }

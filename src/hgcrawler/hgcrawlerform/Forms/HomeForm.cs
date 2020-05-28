@@ -1,6 +1,7 @@
 ﻿using Dijing.Common.Core.Utility;
 using hgcrawler.common.Agents;
 using hgcrawler.common.Enums;
+using hgcrawler.common.Options;
 using hgcrawler.rules;
 using hgcrawler.util;
 using hgcrawlerform.Datastruct;
@@ -28,6 +29,7 @@ namespace hgcrawlerform
         IWebdriverAction _webdriverAction { get; set; }
 
 
+        bool _isWorking { get; set; }
         IWebDriver _webDriver { get; set; }
         NaverRuleConfig _naverRuleConfig { get; set; } = new NaverRuleConfig();
         List<NaverVistiRule> _naverVistiRules { get; set; } = new List<NaverVistiRule>();
@@ -80,6 +82,20 @@ namespace hgcrawlerform
 
         
 
+        private void ChangetTLabStatus(string msg)
+        {
+            if (btnStart.InvokeRequired)
+            {
+                btnStart.Invoke(new Action(() =>
+                {
+                    tlabStatus.Text = msg;
+                }));
+            }
+            else
+            {
+                tlabStatus.Text = msg;
+            }
+        }
         private void InitWebdriver()
         {
             if (_driverHelper == null)
@@ -288,21 +304,6 @@ namespace hgcrawlerform
 
 
 
-        private void Start()
-        {
-            //缓存浏览器规则
-            CacheBrowserConfig();
-
-            //检测访问规则
-            if (!CacheVisitRules())
-                return;
-
-            //获取useragetn
-            var userAgent = GetUserAgent();
-
-            //启动chromedriver
-            _webDriver = _driverHelper.StartDriver(userAgent);
-        }
 
         private string GetUserAgent()
         {
@@ -312,7 +313,7 @@ namespace hgcrawlerform
             {
                 return string.Empty;
             }
-            else if(_naverRuleConfig.UserAgentChangeMode==ChangeModeEnum.Single)
+            else if (_naverRuleConfig.UserAgentChangeMode == ChangeModeEnum.Single)
             {
                 return _userAgentHelper.GetRandomUserAgent(userAgentType);
             }
@@ -321,6 +322,100 @@ namespace hgcrawlerform
                 return _userAgentHelper.GetRandomUserAgent(userAgentType);
             }
         }
+        private bool DoRule(NaverVistiRule rule)
+        {
+            try
+            {
+                //访问主页
+                if(!_webdriverAction.GotoUrl(UrlEndPointsOption.EngineUrl(_naverRuleConfig.VisitRuleType), _webDriver))                
+                    return false;
+
+                //输入关键词
+                var eleSearchInput = _webdriverAction.GetElementByXpath("query", _webDriver);
+                _WebDriver.FindElement(By.Id("query")).SendKeys(_CurrentVisitRule.SearchKey);
+                LogHelper.Default.LogPrint($"关键词输入完成", 2);
+                Task.Delay(2000).Wait();
+
+                //点击搜索
+                _WebDriver.FindElement(By.Id("search_btn")).Click();
+                LogHelper.Default.LogPrint($"关键词：{_CurrentVisitRule.SearchKey}搜索完成", 2);
+                Task.Delay(3000).Wait();
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+                Serilog.Log.Error(ex, "DoRule error");
+                return false;
+            }
+        }
+        private void DoCycleRules()
+        {
+            //获取useragetn
+            var userAgent = GetUserAgent();
+
+            //启动chromedriver
+            _webDriver = _driverHelper.StartDriver(userAgent);
+
+            int index = 0;
+            int i = 0;
+            int times = 0;
+            int ruleCount = _naverVistiRules.Count;            
+            while (true)
+            {
+                try
+                {
+                    //循环索引
+                    times = index / ruleCount;
+                    i = index % ruleCount;
+
+                    //TODO：执行清理
+
+                    //获取规则
+                    var rule = _naverVistiRules[i];
+
+                    //执行规则
+                    bool flag = DoRule(rule);
+                    if(flag)                    
+                        rule.SuccessCount++;
+                    else                    
+                        rule.FailedCount++;
+                    
+                    //执行结果更新
+                }
+                catch (Exception ex)
+                {
+                    Serilog.Log.Error(ex, "DoCycleRules error");
+                }
+            }
+        }
+        private void Start()
+        {
+            //缓存浏览器规则
+            CacheBrowserConfig();
+
+            //检测访问规则
+            if (!CacheVisitRules())
+                return;
+
+            //规则循环执行
+            if (_isWorking)
+            {
+                Serilog.Log.Warning("task is running");
+                MessageBox.Show("task is running", "notice");
+                return;
+            }
+
+            //启动任务线程
+            Task.Run(() =>
+            {
+                _isWorking = true;
+                ChangetTLabStatus("working");
+                DoCycleRules();
+            });        
+        }
+     
+
 
 
 
