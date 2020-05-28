@@ -1,4 +1,5 @@
-﻿using System;
+﻿using hgcrawler.common.Enums;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -27,6 +28,19 @@ namespace hgcrawler.common.Agents
             {
                 var count = MobileUserAgentList.Count;
                 return MobileUserAgentList[_ra.Next(0, count - 1)];
+            }
+        }
+        private string GetUserAgent(VisitRuleTypeEnum visitRuleType,ChangeModeEnum changeMode)
+        {
+
+            UserAgentTypeEnum userAgentType = visitRuleType == VisitRuleTypeEnum.PC ? UserAgentTypeEnum.PCUserAgent : UserAgentTypeEnum.MobileUserAgent;
+
+            switch (changeMode)
+            {
+                case ChangeModeEnum.Single:break;
+                case ChangeModeEnum.Grouply:break;
+                case ChangeModeEnum.NoAction: break;
+                default:break;
             }
         }
 

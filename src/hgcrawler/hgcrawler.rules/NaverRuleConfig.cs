@@ -1,4 +1,5 @@
-﻿using System;
+﻿using hgcrawler.common.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,6 +7,7 @@ namespace hgcrawler.rules
 {
     public class NaverRuleConfig
     {
-        public List<NaverVistiRule> NaverVistiRules { get; set; }
+        public VisitRuleTypeEnum VisitRuleType { get; set; }
+        public ChangeModeEnum UserAgentChangeMode { get; set; }
     }
 }

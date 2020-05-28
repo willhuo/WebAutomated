@@ -22,7 +22,7 @@ namespace hgcrawler.util
         {
             try
             {                
-                Serilog.Log.Information("starting chrome driver");
+                Serilog.Log.Information("begin starting chrome driver");
 
                 var options = new ChromeOptions();
 
@@ -33,8 +33,14 @@ namespace hgcrawler.util
                 options.AddExcludedArgument("enable-automation");
                 options.AddAdditionalCapability("useAutomationExtension", false);
 
-                //TODO:useragent
-                //options.AddArgument("--user-agent=" + _UserAgent);
+                //useragent
+                if (!string.IsNullOrEmpty(userAgent))
+                    options.AddArgument("--user-agent=" + userAgent);
+
+                //IPProxy
+                //if (_BrowserControl.ChangeIP && SystemInfo.NetworkType == "IP代理网络")                
+                //    options.AddArguments("--proxy-server=" + _IPProxy);
+                
 
                 options.AddArguments("--disk-cache-dir=" + Directory.GetCurrentDirectory() + "\\cache");
                 options.AddArgument("–incognito");//启动无痕/隐私模式
