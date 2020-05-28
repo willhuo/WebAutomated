@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,24 +48,31 @@
             this.btnStart = new System.Windows.Forms.Button();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.dgvPCVisitRule = new System.Windows.Forms.DataGridView();
-            this.SearchKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SectionMorePageWaitSec = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ProductKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ProductListWaitSec = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PriceKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ProductPriceListWaitSec = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvVisitRule = new System.Windows.Forms.DataGridView();
+            this.SearchKeys = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.WaitSecsMinInSearch = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.WaitSecsMaxInSearch = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ProductKeys = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.WaitSecsMinInProduct = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.WaitSecsMaxInProduct = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PriceKeys = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.WaitSecsMinInPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.WaitSecsMaxInPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.State = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
             this.dgvPCUserAgent = new System.Windows.Forms.DataGridView();
             this.UserAgent = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
             this.dgvMobileUserAgent = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.CMenuDeletePCRule = new System.Windows.Forms.ToolStripMenuItem();
+            this.CMenuSavePCRule = new System.Windows.Forms.ToolStripMenuItem();
+            this.CMenuLoadPCRule = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -75,12 +83,13 @@
             this.splitContainer1.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvPCVisitRule)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvVisitRule)).BeginInit();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
-            this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPCUserAgent)).BeginInit();
+            this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMobileUserAgent)).BeginInit();
+            this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -159,7 +168,7 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tlabStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 428);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 393);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(800, 22);
             this.statusStrip1.TabIndex = 1;
@@ -179,7 +188,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 25);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(800, 403);
+            this.tabControl1.Size = new System.Drawing.Size(800, 368);
             this.tabControl1.TabIndex = 2;
             // 
             // tabPage1
@@ -188,7 +197,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(792, 377);
+            this.tabPage1.Size = new System.Drawing.Size(792, 342);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Web Visit";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -210,7 +219,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tabControl2);
-            this.splitContainer1.Size = new System.Drawing.Size(786, 371);
+            this.splitContainer1.Size = new System.Drawing.Size(786, 336);
             this.splitContainer1.SplitterDistance = 85;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -218,7 +227,7 @@
             // 
             this.labPublicIP.AutoSize = true;
             this.labPublicIP.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labPublicIP.Location = new System.Drawing.Point(203, 34);
+            this.labPublicIP.Location = new System.Drawing.Point(216, 31);
             this.labPublicIP.Name = "labPublicIP";
             this.labPublicIP.Size = new System.Drawing.Size(106, 20);
             this.labPublicIP.TabIndex = 2;
@@ -228,9 +237,9 @@
             // 
             this.btnStop.BackColor = System.Drawing.Color.MistyRose;
             this.btnStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnStop.Location = new System.Drawing.Point(112, 16);
+            this.btnStop.Location = new System.Drawing.Point(112, 15);
             this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(85, 56);
+            this.btnStop.Size = new System.Drawing.Size(85, 52);
             this.btnStop.TabIndex = 1;
             this.btnStop.Text = "Stop";
             this.btnStop.UseVisualStyleBackColor = false;
@@ -240,9 +249,9 @@
             // 
             this.btnStart.BackColor = System.Drawing.Color.Aquamarine;
             this.btnStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnStart.Location = new System.Drawing.Point(21, 16);
+            this.btnStart.Location = new System.Drawing.Point(21, 15);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(85, 56);
+            this.btnStart.Size = new System.Drawing.Size(85, 52);
             this.btnStart.TabIndex = 0;
             this.btnStart.Text = "Start";
             this.btnStart.UseVisualStyleBackColor = false;
@@ -258,83 +267,104 @@
             this.tabControl2.Location = new System.Drawing.Point(0, 0);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(786, 282);
+            this.tabControl2.Size = new System.Drawing.Size(786, 247);
             this.tabControl2.TabIndex = 0;
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.dgvPCVisitRule);
+            this.tabPage3.Controls.Add(this.dgvVisitRule);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(778, 256);
+            this.tabPage3.Size = new System.Drawing.Size(778, 221);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "Web Visit Rules";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // dgvPCVisitRule
+            // dgvVisitRule
             // 
-            this.dgvPCVisitRule.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
-            this.dgvPCVisitRule.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPCVisitRule.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.SearchKey,
-            this.SectionMorePageWaitSec,
-            this.ProductKey,
-            this.ProductListWaitSec,
-            this.PriceKey,
-            this.ProductPriceListWaitSec,
+            this.dgvVisitRule.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
+            this.dgvVisitRule.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvVisitRule.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.SearchKeys,
+            this.WaitSecsMinInSearch,
+            this.WaitSecsMaxInSearch,
+            this.ProductKeys,
+            this.WaitSecsMinInProduct,
+            this.WaitSecsMaxInProduct,
+            this.PriceKeys,
+            this.WaitSecsMinInPrice,
+            this.WaitSecsMaxInPrice,
             this.State});
-            this.dgvPCVisitRule.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvPCVisitRule.Location = new System.Drawing.Point(3, 3);
-            this.dgvPCVisitRule.Name = "dgvPCVisitRule";
-            this.dgvPCVisitRule.RowHeadersWidth = 51;
-            this.dgvPCVisitRule.Size = new System.Drawing.Size(772, 250);
-            this.dgvPCVisitRule.TabIndex = 1;
-            this.dgvPCVisitRule.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPCVisitRule_CellEndEdit);
-            this.dgvPCVisitRule.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvPCVisitRule_RowPostPaint);
+            this.dgvVisitRule.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvVisitRule.Location = new System.Drawing.Point(3, 3);
+            this.dgvVisitRule.Name = "dgvVisitRule";
+            this.dgvVisitRule.RowHeadersWidth = 51;
+            this.dgvVisitRule.Size = new System.Drawing.Size(772, 215);
+            this.dgvVisitRule.TabIndex = 1;
+            this.dgvVisitRule.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVisitRule_CellEndEdit);
+            this.dgvVisitRule.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvVisitRule_RowPostPaint);
             // 
-            // SearchKey
+            // SearchKeys
             // 
-            this.SearchKey.HeaderText = "搜索关键词";
-            this.SearchKey.MinimumWidth = 6;
-            this.SearchKey.Name = "SearchKey";
+            this.SearchKeys.HeaderText = "SearchKeys";
+            this.SearchKeys.MinimumWidth = 6;
+            this.SearchKeys.Name = "SearchKeys";
             // 
-            // SectionMorePageWaitSec
+            // WaitSecsMinInSearch
             // 
-            this.SectionMorePageWaitSec.HeaderText = "耗时";
-            this.SectionMorePageWaitSec.MinimumWidth = 6;
-            this.SectionMorePageWaitSec.Name = "SectionMorePageWaitSec";
-            this.SectionMorePageWaitSec.Width = 60;
+            this.WaitSecsMinInSearch.HeaderText = "WaitMin";
+            this.WaitSecsMinInSearch.MinimumWidth = 6;
+            this.WaitSecsMinInSearch.Name = "WaitSecsMinInSearch";
+            this.WaitSecsMinInSearch.Width = 50;
             // 
-            // ProductKey
+            // WaitSecsMaxInSearch
             // 
-            this.ProductKey.HeaderText = "产品关键词";
-            this.ProductKey.MinimumWidth = 6;
-            this.ProductKey.Name = "ProductKey";
+            this.WaitSecsMaxInSearch.HeaderText = "WaitMax";
+            this.WaitSecsMaxInSearch.Name = "WaitSecsMaxInSearch";
+            this.WaitSecsMaxInSearch.Width = 50;
             // 
-            // ProductListWaitSec
+            // ProductKeys
             // 
-            this.ProductListWaitSec.HeaderText = "耗时";
-            this.ProductListWaitSec.MinimumWidth = 6;
-            this.ProductListWaitSec.Name = "ProductListWaitSec";
-            this.ProductListWaitSec.Width = 60;
+            this.ProductKeys.HeaderText = "ProductKeys";
+            this.ProductKeys.MinimumWidth = 6;
+            this.ProductKeys.Name = "ProductKeys";
             // 
-            // PriceKey
+            // WaitSecsMinInProduct
             // 
-            this.PriceKey.HeaderText = "价格关键词";
-            this.PriceKey.MinimumWidth = 6;
-            this.PriceKey.Name = "PriceKey";
+            this.WaitSecsMinInProduct.HeaderText = "WaitMin";
+            this.WaitSecsMinInProduct.MinimumWidth = 6;
+            this.WaitSecsMinInProduct.Name = "WaitSecsMinInProduct";
+            this.WaitSecsMinInProduct.Width = 50;
             // 
-            // ProductPriceListWaitSec
+            // WaitSecsMaxInProduct
             // 
-            this.ProductPriceListWaitSec.HeaderText = "耗时";
-            this.ProductPriceListWaitSec.MinimumWidth = 6;
-            this.ProductPriceListWaitSec.Name = "ProductPriceListWaitSec";
-            this.ProductPriceListWaitSec.Width = 60;
+            this.WaitSecsMaxInProduct.HeaderText = "WaitMax";
+            this.WaitSecsMaxInProduct.Name = "WaitSecsMaxInProduct";
+            this.WaitSecsMaxInProduct.Width = 50;
+            // 
+            // PriceKeys
+            // 
+            this.PriceKeys.HeaderText = "PriceKeys";
+            this.PriceKeys.MinimumWidth = 6;
+            this.PriceKeys.Name = "PriceKeys";
+            // 
+            // WaitSecsMinInPrice
+            // 
+            this.WaitSecsMinInPrice.HeaderText = "WaitMin";
+            this.WaitSecsMinInPrice.MinimumWidth = 6;
+            this.WaitSecsMinInPrice.Name = "WaitSecsMinInPrice";
+            this.WaitSecsMinInPrice.Width = 50;
+            // 
+            // WaitSecsMaxInPrice
+            // 
+            this.WaitSecsMaxInPrice.HeaderText = "WaitMax";
+            this.WaitSecsMaxInPrice.Name = "WaitSecsMaxInPrice";
+            this.WaitSecsMaxInPrice.Width = 50;
             // 
             // State
             // 
-            this.State.HeaderText = "状态";
+            this.State.HeaderText = "State";
             this.State.MinimumWidth = 6;
             this.State.Name = "State";
             this.State.Width = 60;
@@ -346,20 +376,32 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(778, 256);
+            this.tabPage4.Size = new System.Drawing.Size(778, 221);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "Webbrowser Control";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // radioButton2
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(792, 377);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Network Control";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(145, 52);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(95, 16);
+            this.radioButton2.TabIndex = 1;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "radioButton2";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(54, 52);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(95, 16);
+            this.radioButton1.TabIndex = 0;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "radioButton1";
+            this.radioButton1.UseVisualStyleBackColor = true;
             // 
             // tabPage5
             // 
@@ -367,21 +409,10 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(778, 256);
+            this.tabPage5.Size = new System.Drawing.Size(778, 221);
             this.tabPage5.TabIndex = 2;
             this.tabPage5.Text = "PC-UserAgent";
             this.tabPage5.UseVisualStyleBackColor = true;
-            // 
-            // tabPage6
-            // 
-            this.tabPage6.Controls.Add(this.dgvMobileUserAgent);
-            this.tabPage6.Location = new System.Drawing.Point(4, 22);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(778, 256);
-            this.tabPage6.TabIndex = 3;
-            this.tabPage6.Text = "Mobile-UserAgent";
-            this.tabPage6.UseVisualStyleBackColor = true;
             // 
             // dgvPCUserAgent
             // 
@@ -397,7 +428,7 @@
             this.dgvPCUserAgent.Name = "dgvPCUserAgent";
             this.dgvPCUserAgent.ReadOnly = true;
             this.dgvPCUserAgent.RowHeadersWidth = 51;
-            this.dgvPCUserAgent.Size = new System.Drawing.Size(772, 250);
+            this.dgvPCUserAgent.Size = new System.Drawing.Size(772, 215);
             this.dgvPCUserAgent.TabIndex = 1;
             this.dgvPCUserAgent.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvPCUserAgent_RowPostPaint);
             // 
@@ -407,6 +438,17 @@
             this.UserAgent.MinimumWidth = 6;
             this.UserAgent.Name = "UserAgent";
             this.UserAgent.ReadOnly = true;
+            // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.dgvMobileUserAgent);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(778, 221);
+            this.tabPage6.TabIndex = 3;
+            this.tabPage6.Text = "Mobile-UserAgent";
+            this.tabPage6.UseVisualStyleBackColor = true;
             // 
             // dgvMobileUserAgent
             // 
@@ -422,7 +464,7 @@
             this.dgvMobileUserAgent.Name = "dgvMobileUserAgent";
             this.dgvMobileUserAgent.ReadOnly = true;
             this.dgvMobileUserAgent.RowHeadersWidth = 51;
-            this.dgvMobileUserAgent.Size = new System.Drawing.Size(772, 250);
+            this.dgvMobileUserAgent.Size = new System.Drawing.Size(772, 215);
             this.dgvMobileUserAgent.TabIndex = 1;
             this.dgvMobileUserAgent.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvMobileUserAgent_RowPostPaint);
             // 
@@ -433,33 +475,52 @@
             this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
             this.dataGridViewTextBoxColumn6.ReadOnly = true;
             // 
-            // radioButton1
+            // tabPage2
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(54, 56);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(85, 17);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "radioButton1";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(792, 342);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Network Control";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // radioButton2
+            // contextMenuStrip
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(145, 56);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(85, 17);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "radioButton2";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.contextMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CMenuDeletePCRule,
+            this.CMenuSavePCRule,
+            this.CMenuLoadPCRule});
+            this.contextMenuStrip.Name = "contextMenuStrip";
+            this.contextMenuStrip.Size = new System.Drawing.Size(149, 70);
+            // 
+            // CMenuDeletePCRule
+            // 
+            this.CMenuDeletePCRule.Name = "CMenuDeletePCRule";
+            this.CMenuDeletePCRule.Size = new System.Drawing.Size(148, 22);
+            this.CMenuDeletePCRule.Text = "Delete Rules";
+            this.CMenuDeletePCRule.Click += new System.EventHandler(this.CMenuDeletePCRule_Click);
+            // 
+            // CMenuSavePCRule
+            // 
+            this.CMenuSavePCRule.Name = "CMenuSavePCRule";
+            this.CMenuSavePCRule.Size = new System.Drawing.Size(148, 22);
+            this.CMenuSavePCRule.Text = "Save Rules";
+            this.CMenuSavePCRule.Click += new System.EventHandler(this.CMenuSavePCRule_Click);
+            // 
+            // CMenuLoadPCRule
+            // 
+            this.CMenuLoadPCRule.Name = "CMenuLoadPCRule";
+            this.CMenuLoadPCRule.Size = new System.Drawing.Size(148, 22);
+            this.CMenuLoadPCRule.Text = "Lora Rules";
+            this.CMenuLoadPCRule.Click += new System.EventHandler(this.CMenuLoadPCRule_Click);
             // 
             // HomeForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 415);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -481,13 +542,14 @@
             this.splitContainer1.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvPCVisitRule)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvVisitRule)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             this.tabPage5.ResumeLayout(false);
-            this.tabPage6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPCUserAgent)).EndInit();
+            this.tabPage6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvMobileUserAgent)).EndInit();
+            this.contextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -511,14 +573,7 @@
         private System.Windows.Forms.Label labPublicIP;
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Button btnStart;
-        private System.Windows.Forms.DataGridView dgvPCVisitRule;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SearchKey;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SectionMorePageWaitSec;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ProductKey;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ProductListWaitSec;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PriceKey;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ProductPriceListWaitSec;
-        private System.Windows.Forms.DataGridViewTextBoxColumn State;
+        private System.Windows.Forms.DataGridView dgvVisitRule;
         private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem;
         private System.Windows.Forms.TabControl tabControl2;
@@ -532,6 +587,20 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SearchKeys;
+        private System.Windows.Forms.DataGridViewTextBoxColumn WaitSecsMinInSearch;
+        private System.Windows.Forms.DataGridViewTextBoxColumn WaitSecsMaxInSearch;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ProductKeys;
+        private System.Windows.Forms.DataGridViewTextBoxColumn WaitSecsMinInProduct;
+        private System.Windows.Forms.DataGridViewTextBoxColumn WaitSecsMaxInProduct;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PriceKeys;
+        private System.Windows.Forms.DataGridViewTextBoxColumn WaitSecsMinInPrice;
+        private System.Windows.Forms.DataGridViewTextBoxColumn WaitSecsMaxInPrice;
+        private System.Windows.Forms.DataGridViewTextBoxColumn State;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem CMenuDeletePCRule;
+        private System.Windows.Forms.ToolStripMenuItem CMenuSavePCRule;
+        private System.Windows.Forms.ToolStripMenuItem CMenuLoadPCRule;
     }
 }
 

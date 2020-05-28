@@ -66,6 +66,12 @@ namespace hgcrawlerform
         }
 
         
+
+        private void InitWebdriverAction()
+        {
+            if (_webdriverAction == null)
+                _webdriverAction = new WebdriverAction();
+        }
         private void InitUserAgent()
         {
             if(_userAgentHelper==null)
@@ -102,19 +108,31 @@ namespace hgcrawlerform
             Serilog.Log.Information("hgcrawler start");
 
             InitUserAgent();
+            InitWebdriverAction();
         }
 
 
 
 
-        private void dgvPCVisitRule_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+
+
+
+        private void Start()
         {
 
         }
-        private void dgvPCVisitRule_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+
+
+
+
+        private void dgvVisitRule_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            System.Drawing.Rectangle rectangle = new System.Drawing.Rectangle(e.RowBounds.Location.X, e.RowBounds.Location.Y, dgvPCVisitRule.RowHeadersWidth - 4, e.RowBounds.Height);
-            TextRenderer.DrawText(e.Graphics, (e.RowIndex + 1).ToString(), dgvPCVisitRule.RowHeadersDefaultCellStyle.Font, rectangle, dgvPCVisitRule.RowHeadersDefaultCellStyle.ForeColor, TextFormatFlags.VerticalCenter | TextFormatFlags.Right);
+
+        }
+        private void dgvVisitRule_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        {
+            System.Drawing.Rectangle rectangle = new System.Drawing.Rectangle(e.RowBounds.Location.X, e.RowBounds.Location.Y, dgvVisitRule.RowHeadersWidth - 4, e.RowBounds.Height);
+            TextRenderer.DrawText(e.Graphics, (e.RowIndex + 1).ToString(), dgvVisitRule.RowHeadersDefaultCellStyle.Font, rectangle, dgvVisitRule.RowHeadersDefaultCellStyle.ForeColor, TextFormatFlags.VerticalCenter | TextFormatFlags.Right);
         }
         private void dgvPCUserAgent_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
@@ -126,5 +144,23 @@ namespace hgcrawlerform
             System.Drawing.Rectangle rectangle = new System.Drawing.Rectangle(e.RowBounds.Location.X, e.RowBounds.Location.Y, dgvMobileUserAgent.RowHeadersWidth - 4, e.RowBounds.Height);
             TextRenderer.DrawText(e.Graphics, (e.RowIndex + 1).ToString(), dgvMobileUserAgent.RowHeadersDefaultCellStyle.Font, rectangle, dgvMobileUserAgent.RowHeadersDefaultCellStyle.ForeColor, TextFormatFlags.VerticalCenter | TextFormatFlags.Right);
         }
+
+
+
+
+        private void CMenuDeletePCRule_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void CMenuSavePCRule_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void CMenuLoadPCRule_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
     }
 }

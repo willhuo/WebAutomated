@@ -7,7 +7,7 @@ namespace hgcrawler.util
 {
     public interface IDriverHelper
     {
-        IWebDriver StartDriver();
+        IWebDriver StartDriver(string userAgent = null);
         void CloseWedriver(IWebDriver webDriver);
     }
 }

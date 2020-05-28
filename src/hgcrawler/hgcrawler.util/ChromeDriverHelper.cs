@@ -16,8 +16,9 @@ namespace hgcrawler.util
         /// <summary>
         /// 启动chromedriver驱动
         /// </summary>
+        /// <param name="userAgent"></param>
         /// <returns></returns>
-        public IWebDriver StartDriver()
+        public IWebDriver StartDriver(string userAgent=null)
         {
             try
             {                
