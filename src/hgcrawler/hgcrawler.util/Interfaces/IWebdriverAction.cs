@@ -10,11 +10,15 @@ namespace hgcrawler.util
         bool GotoUrl(string url, IWebDriver webDriver);
         bool DoInput(string content, string id, IWebDriver webDriver);
         bool DoClick(string xpath, IWebDriver webDriver);
+        bool DoClickById(string id, IWebDriver webDriver);
         bool SendKeys(string keys, string xpath, IWebDriver webDriver, int delayMilliSecs = 2000);
+        bool SendKeysById(string keys, string id, IWebDriver webDriver, int delayMilliSecs = 2000);
         string GetPage(IWebDriver webDriver);
         IWebElement GetElementByXpath(string xpath, IWebElement webElement);
         IWebElement GetElementByXpath(string xpath, IWebDriver webDriver);
         (bool flag, IReadOnlyCollection<IWebElement> eles) GetEelements(string xpath, IWebDriver webDriver);
         bool ScrollToElement(IWebElement webElement, IWebDriver webDriver, int waitMiliSec = 5000, int step = 50, int offsetY = 400);
+        bool ScrollDown(IWebElement webElement, IWebDriver webDriver, int clientHeight, int waitMiliSec = 5000, int step = 50);
+        bool GetClientHeight(IWebDriver webDriver, out int clientHeight);
     }
 }

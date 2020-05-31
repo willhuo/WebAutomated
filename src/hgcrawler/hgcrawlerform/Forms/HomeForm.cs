@@ -138,11 +138,10 @@ namespace hgcrawlerform
             InitLog();
             Serilog.Log.Information("hgcrawler start");
 
+            LoadBrowserConfig();
             InitUserAgent();
             InitWebdriver();
         }
-
-
 
 
         private void SaveVisitRules()
@@ -289,6 +288,10 @@ namespace hgcrawlerform
         }
         private void CacheBrowserConfig()
         {
+
+            _naverRuleConfig.PageMax = (int)numPageMax.Value;
+
+
             _naverRuleConfig.VisitRuleType = EnumHelper.GetEnumType<VisitRuleTypeEnum>(comVisitRuleType.Text);
             _naverRuleConfig.UserAgentChangeMode = EnumHelper.GetEnumType<ChangeModeEnum>(comUserAgentChangeMode.Text);
             var ruleConfigStr = JsonConvert.SerializeObject(_naverRuleConfig);
@@ -298,8 +301,19 @@ namespace hgcrawlerform
 
             Serilog.Log.Information("Browser Control Config save success");
         }
+        private void LoadBrowserConfig()
+        {
+            var ruleConfigStr = Properties.Settings.Default.RuleConfig;
+            var ruleConfig = JsonConvert.DeserializeObject<NaverRuleConfig>(ruleConfigStr);
 
 
+            numPageMax.Value = ruleConfig.PageMax;
+            comVisitRuleType.Text = ruleConfig.VisitRuleType.ToString();
+            comUserAgentChangeMode.Text = ruleConfig.UserAgentChangeMode.ToString();
+
+
+            Serilog.Log.Information("Browser Control Config load success");
+        }
 
 
 
@@ -324,28 +338,13 @@ namespace hgcrawlerform
         }
         private bool DoRule(NaverVistiRule rule)
         {
-            try
+            if(_naverRuleConfig.VisitRuleType==VisitRuleTypeEnum.PC)
             {
-                //访问主页
-                if(!_webdriverAction.GotoUrl(UrlEndPointsOption.EngineUrl(_naverRuleConfig.VisitRuleType), _webDriver))                
-                    return false;
-
-                //输入关键词
-                var eleSearchInput = _webdriverAction.GetElementByXpath("query", _webDriver);
-                _WebDriver.FindElement(By.Id("query")).SendKeys(_CurrentVisitRule.SearchKey);
-                LogHelper.Default.LogPrint($"关键词输入完成", 2);
-                Task.Delay(2000).Wait();
-
-                //点击搜索
-                _WebDriver.FindElement(By.Id("search_btn")).Click();
-                LogHelper.Default.LogPrint($"关键词：{_CurrentVisitRule.SearchKey}搜索完成", 2);
-                Task.Delay(3000).Wait();
-
-                return true;
+                return DoPCRule(rule);
             }
-            catch(Exception ex)
+            else
             {
-                Serilog.Log.Error(ex, "DoRule error");
+                Serilog.Log.Warning("mobile rule not support currently!");
                 return false;
             }
         }
@@ -414,8 +413,230 @@ namespace hgcrawlerform
                 DoCycleRules();
             });        
         }
-     
 
+
+
+
+
+        private bool BrowserProductListAndVisitProduct(NaverVistiRule rule)
+        {
+            int currentPageNum = 0;
+
+            //产品元素
+            IWebElement product = null;
+
+
+            //检测翻页是否超限
+            if(currentPageNum>_naverRuleConfig.PageMax)
+            {
+                Serilog.Log.Warning("reach limit page max number");
+                return false;
+            }
+
+            //获取页面内容
+            var respage = _webdriverAction.GetPage(_webDriver);
+            if (string.IsNullOrEmpty(respage))
+                return false;
+
+            //判断当前页面是包含产品关键词
+            if (respage.Contains(rule.ProductKeys))
+            {
+                var productXpath = "//li[@data-nv-mid='" + rule.ProductKeys + "']/div[@class='info']//a";
+                product = _webdriverAction.GetElementByXpath("", _webDriver);
+            }
+
+            //获取窗体高度
+            if (!_webdriverAction.GetClientHeight(_webDriver, out int clientHeight))
+                return false;
+
+
+
+
+
+
+
+            try
+            {
+                bool flag = false;
+                IWebElement product = null;
+
+                if (_WebDriver.PageSource.Contains(_CurrentVisitRule.ProductKey))
+                {
+                    //此处规则变化过
+                    product = _WebDriver.FindElement(By.XPath("//li[@data-nv-mid='" + _CurrentVisitRule.ProductKey + "']/div[@class='info']//a"));
+                }
+                else
+                    LogHelper.Default.LogPrint($"当前页面不存在关键词：{_CurrentVisitRule.ProductKey}", 3);
+
+                if (product == null)
+                {
+                    _CurrentPage++;
+                    if (_CurrentPage >= _PCVisitControl.PageMax)
+                    {
+                        LogHelper.Default.LogPrint($"搜索超过最大页数，放弃继续翻页搜索", 3);
+                        return false;
+                    }
+
+                    //下拉到最下边
+                    ScrollDown(_CurrentVisitRule.ProductListWaitSec * 1000);
+
+                    //进行翻页
+                    flag = VisitPCNextPage();
+                    if (flag == false)
+                        return false;
+
+                    //递归方式查找产品
+                    flag = BrowserPCProductListAndVisitProduct();
+                    if (flag == false)
+                        return false;
+                }
+                else
+                {
+                    //浏览页面
+                    ScrollDownAndUp(_CurrentVisitRule.ProductListWaitSec * 1000);
+
+                    //定位到指定元素
+                    ScrollToElement(_CurrentVisitRule.ProductListWaitSec * 500, product);
+
+                    //获取产品连接并访问
+                    var url = product.GetAttribute("href");
+                    _WebDriver.Navigate().GoToUrl(url);
+                    LogHelper.Default.LogPrint($"产品页面访问完成", 2);
+                    Task.Delay(2000).Wait();
+
+                    //检测页面是否有权访问
+                    flag = AbormalPageCheck();
+                    if (flag == false)
+                        return false;
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Default.LogDay($"BrowserPCProductListAndVisitProduct error,{ex}");
+                LogHelper.Default.LogPrint($"BrowserPCProductListAndVisitProduct error,{ex.Message}", 4);
+                return false;
+            }
+        }
+        private bool VisitMoreProducts(NaverVistiRule rule)
+        {           
+            //获取页面内容
+            var respage = _webdriverAction.GetPage(_webDriver);
+            if (string.IsNullOrEmpty(respage))
+                return false;
+
+            //查找更多产品按钮
+            IWebElement sectionMore = null;
+            if (respage.Contains("쇼핑 더보기"))
+            {
+                sectionMore = _webdriverAction.GetElementByXpath("//a[text()='쇼핑 더보기']", _webDriver);
+                if(sectionMore==null)
+                {
+                    Serilog.Log.Warning("find more product button failed");
+                    return false;
+                }
+                else
+                {
+                    Serilog.Log.Information("find more product button success");
+                }
+            }
+            else
+            {                
+                Serilog.Log.Warning("dom content can not find more product button trace");
+                return false;
+            }
+
+
+            //提取入口URL地址
+            var sectionMoreUrl = sectionMore.GetAttribute("href");
+            Serilog.Log.Information("more product url:{0}",sectionMoreUrl);
+
+            //定位到元素位置
+            if (!_webdriverAction.ScrollToElement(sectionMore, _webDriver))
+                return false;
+
+            //访问更多商品地址
+            if(_webdriverAction.GotoUrl(sectionMoreUrl, _webDriver))
+            {
+                Serilog.Log.Warning("visit more product url failed");
+                return false;
+            }
+            {
+                Serilog.Log.Information("visit more product url success");
+            }
+
+
+            Task.Delay(5000).Wait();
+            return true;
+        }
+        private bool InputSearchKeyAndClick(NaverVistiRule rule)
+        {
+            //输入关键词
+            if (!_webdriverAction.SendKeysById(rule.SearchKeys, "query", _webDriver, rule.WaitSecsInSearch))
+            {
+                Serilog.Log.Warning("input search key failed");
+                return false;
+            }
+            else
+            {
+                Serilog.Log.Information("input search key success");
+            }
+            
+
+            //点击搜索按钮
+            if (!_webdriverAction.DoClickById("search_btn", _webDriver))
+            {
+                Serilog.Log.Warning("click search button failed");
+                return false;
+            }                
+            else
+            {
+                Serilog.Log.Warning("click search button success");
+                return true;
+            }
+        }
+        private bool VisitHomePage(NaverVistiRule rule)
+        {
+            if (!_webdriverAction.GotoUrl(UrlEndPointsOption.EngineUrl(_naverRuleConfig.VisitRuleType), _webDriver))
+            {
+                Serilog.Log.Warning("home page visit failed");
+                return false;
+            }
+            else
+            {
+                Serilog.Log.Information("home page visit success");
+                return true;
+            }
+        }
+        private bool DoPCRule(NaverVistiRule rule)
+        {
+            try
+            {
+                //访问主页
+                if (!VisitHomePage(rule))
+                    return false;
+
+                //TODO：随机前置访问
+
+                //输入关键词并点击搜索按钮
+                if (InputSearchKeyAndClick(rule))
+                    return false;
+
+                //访问更多商品链接
+                if (!VisitMoreProducts(rule))
+                    return false;
+
+
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Serilog.Log.Error(ex, "DoRule error");
+                return false;
+            }
+        }
 
 
 
