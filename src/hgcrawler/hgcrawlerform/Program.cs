@@ -1,4 +1,7 @@
-﻿using Dijing.SerilogExt;
+﻿using Dijing.Common.Core.Enums;
+using Dijing.Common.Core.Utility;
+using Dijing.SerilogExt;
+using hgcrawlerform.Forms;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -17,22 +20,13 @@ namespace hgcrawlerform
         [STAThread]
         static void Main()
         {
-            var sink = new InMemorySink();
-            Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Information()
-#if RELEASE
-            .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
-            .MinimumLevel.Override("System", Serilog.Events.LogEventLevel.Warning)
-#endif
-            .Enrich.FromLogContext()
-            //.WriteTo.Console()
-            .WriteTo.Sink(sink)
-            .WriteTo.File("logs" + Path.DirectorySeparatorChar + "log-.txt", rollingInterval: RollingInterval.Day, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Warning)
-            .CreateLogger();            
+            EnvironmentHelper.GetInstance().OSPlatfrom = OSPlatfromEnum.Windows;
+            InitLog.SetLog(RunModeEnum.Debug);
+            Log.Warning("audiodis.client is starting up");
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new HomeForm());
+            Application.Run(new LoginForm());
         }
     }
 }

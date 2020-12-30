@@ -42,6 +42,9 @@ namespace hgcrawler.common.Agents
                 case ChangeModeEnum.NoAction: break;
                 default:break;
             }
+
+            //TODO:return user-agent
+            return string.Empty;
         }
 
 

@@ -38,19 +38,19 @@
             this.richTxtLog.Location = new System.Drawing.Point(0, 0);
             this.richTxtLog.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.richTxtLog.Name = "richTxtLog";
-            this.richTxtLog.Size = new System.Drawing.Size(800, 450);
+            this.richTxtLog.Size = new System.Drawing.Size(800, 415);
             this.richTxtLog.TabIndex = 3;
             this.richTxtLog.Text = "";
             // 
             // LogForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 415);
             this.Controls.Add(this.richTxtLog);
             this.Name = "LogForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "System Log";
+            this.Text = "Log";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LogForm_FormClosing);
             this.Load += new System.EventHandler(this.LogForm_Load);
             this.ResumeLayout(false);

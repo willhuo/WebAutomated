@@ -1,6 +1,7 @@
 ﻿using Dijing.Appsettings;
 using Dijing.Common.Core.Enums;
 using Dijing.Common.Core.Utility;
+using Dijing.SerilogExt;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
@@ -23,29 +24,14 @@ namespace hgcrawler
         {
             EnvironmentHelper.GetInstance().OSPlatfrom = OSPlatfromEnum.Windows;
             SetEncoding();
-            SetLog();
+            InitLog.SetLog(RunModeEnum.Debug);
             InitLicense();
             if (EnvironmentHelper.GetInstance().OSPlatfrom == OSPlatfromEnum.Windows)
                 InitUI();
             IngoreCtrlC();
             ErrorHandle();
 
-        }
-        private static void SetLog()
-        {
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Information()
-#if RELEASE
-                .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
-                .MinimumLevel.Override("System", Serilog.Events.LogEventLevel.Warning)
-#endif
-                .Enrich.FromLogContext()
-                .WriteTo.Console()
-                .WriteTo.File("logs" + Path.DirectorySeparatorChar + "log-.txt", rollingInterval: RollingInterval.Day, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Warning)
-                .CreateLogger();
-
-            //LoggerFactory.Create(builder => builder.AddSerilog());
-        }
+        }        
         private static void InitLicense()
         {
             RegisterHelper.Default.CheckLicense("5bd223e6654368182ab0284c1d4032e8", true);

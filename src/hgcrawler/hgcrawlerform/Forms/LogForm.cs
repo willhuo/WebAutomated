@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dijing.SerilogExt;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,7 +20,9 @@ namespace hgcrawlerform.Forms
 
         private void LogForm_Load(object sender, EventArgs e)
         {
-            Dijing.SerilogExt.InMemorySink.OnLogReceivedEvent += InMemorySink_OnLogReceivedEvent;
+            this.Location = new Point(Screen.PrimaryScreen.Bounds.Width - this.Width - 10, 10);
+            InMemorySink.OnLogReceivedEvent += InMemorySink_OnLogReceivedEvent;
+            Serilog.Log.Information("日志组件初始化完成");
         }
 
         private void LogForm_FormClosing(object sender, FormClosingEventArgs e)
