@@ -121,13 +121,6 @@ namespace hgcrawlerform
                 }
             }
         }
-        private void InitLog()
-        {
-            var logForm = new LogForm();
-            SysConfig.LogForm = logForm;
-            logForm.Show();
-            logForm.Hide();
-        }
         private void InitUI()
         {
             this.Text += $"[{Application.ProductVersion}]";
@@ -135,7 +128,6 @@ namespace hgcrawlerform
         private void Init()
         {
             InitUI();
-            InitLog();
             Serilog.Log.Information("hgcrawler start");
 
             LoadBrowserConfig();
@@ -451,73 +443,73 @@ namespace hgcrawlerform
 
 
 
+            return true;
 
 
 
+            //try
+            //{
+            //    bool flag = false;
+            //    IWebElement product = null;
 
-            try
-            {
-                bool flag = false;
-                IWebElement product = null;
+            //    if (_WebDriver.PageSource.Contains(_CurrentVisitRule.ProductKey))
+            //    {
+            //        //此处规则变化过
+            //        product = _WebDriver.FindElement(By.XPath("//li[@data-nv-mid='" + _CurrentVisitRule.ProductKey + "']/div[@class='info']//a"));
+            //    }
+            //    else
+            //        LogHelper.Default.LogPrint($"当前页面不存在关键词：{_CurrentVisitRule.ProductKey}", 3);
 
-                if (_WebDriver.PageSource.Contains(_CurrentVisitRule.ProductKey))
-                {
-                    //此处规则变化过
-                    product = _WebDriver.FindElement(By.XPath("//li[@data-nv-mid='" + _CurrentVisitRule.ProductKey + "']/div[@class='info']//a"));
-                }
-                else
-                    LogHelper.Default.LogPrint($"当前页面不存在关键词：{_CurrentVisitRule.ProductKey}", 3);
+            //    if (product == null)
+            //    {
+            //        _CurrentPage++;
+            //        if (_CurrentPage >= _PCVisitControl.PageMax)
+            //        {
+            //            LogHelper.Default.LogPrint($"搜索超过最大页数，放弃继续翻页搜索", 3);
+            //            return false;
+            //        }
 
-                if (product == null)
-                {
-                    _CurrentPage++;
-                    if (_CurrentPage >= _PCVisitControl.PageMax)
-                    {
-                        LogHelper.Default.LogPrint($"搜索超过最大页数，放弃继续翻页搜索", 3);
-                        return false;
-                    }
+            //        //下拉到最下边
+            //        ScrollDown(_CurrentVisitRule.ProductListWaitSec * 1000);
 
-                    //下拉到最下边
-                    ScrollDown(_CurrentVisitRule.ProductListWaitSec * 1000);
+            //        //进行翻页
+            //        flag = VisitPCNextPage();
+            //        if (flag == false)
+            //            return false;
 
-                    //进行翻页
-                    flag = VisitPCNextPage();
-                    if (flag == false)
-                        return false;
+            //        //递归方式查找产品
+            //        flag = BrowserPCProductListAndVisitProduct();
+            //        if (flag == false)
+            //            return false;
+            //    }
+            //    else
+            //    {
+            //        //浏览页面
+            //        ScrollDownAndUp(_CurrentVisitRule.ProductListWaitSec * 1000);
 
-                    //递归方式查找产品
-                    flag = BrowserPCProductListAndVisitProduct();
-                    if (flag == false)
-                        return false;
-                }
-                else
-                {
-                    //浏览页面
-                    ScrollDownAndUp(_CurrentVisitRule.ProductListWaitSec * 1000);
+            //        //定位到指定元素
+            //        ScrollToElement(_CurrentVisitRule.ProductListWaitSec * 500, product);
 
-                    //定位到指定元素
-                    ScrollToElement(_CurrentVisitRule.ProductListWaitSec * 500, product);
+            //        //获取产品连接并访问
+            //        var url = product.GetAttribute("href");
+            //        _WebDriver.Navigate().GoToUrl(url);
+            //        LogHelper.Default.LogPrint($"产品页面访问完成", 2);
+            //        Task.Delay(2000).Wait();
 
-                    //获取产品连接并访问
-                    var url = product.GetAttribute("href");
-                    _WebDriver.Navigate().GoToUrl(url);
-                    LogHelper.Default.LogPrint($"产品页面访问完成", 2);
-                    Task.Delay(2000).Wait();
+            //        //检测页面是否有权访问
+            //        flag = AbormalPageCheck();
+            //        if (flag == false)
+            //            return false;
+            //    }
 
-                    //检测页面是否有权访问
-                    flag = AbormalPageCheck();
-                    if (flag == false)
-                        return false;
-                }
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Default.LogDay($"BrowserPCProductListAndVisitProduct error,{ex}");
-                LogHelper.Default.LogPrint($"BrowserPCProductListAndVisitProduct error,{ex.Message}", 4);
-                return false;
-            }
+            //    return true;
+            //}
+            //catch (Exception ex)
+            //{
+            //    LogHelper.Default.LogDay($"BrowserPCProductListAndVisitProduct error,{ex}");
+            //    LogHelper.Default.LogPrint($"BrowserPCProductListAndVisitProduct error,{ex.Message}", 4);
+            //    return false;
+            //}
         }
         private bool VisitMoreProducts(NaverVistiRule rule)
         {           

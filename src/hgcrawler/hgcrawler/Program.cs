@@ -48,7 +48,7 @@ namespace hgcrawler
                     services.AddSingleton<IWebdriverAction, WebdriverAction>();
                     services.AddHostedService<_1688Service>();
                 })                
-                .UseConsoleLifetime()
+                .UseConsoleLifetime()                
                 .Build();
             return host;
         }
