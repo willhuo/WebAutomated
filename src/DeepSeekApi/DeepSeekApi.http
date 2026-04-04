@@ -1,0 +1,6 @@
+@DeepSeekApi_HostAddress = http://localhost:5073
+
+GET {{DeepSeekApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
